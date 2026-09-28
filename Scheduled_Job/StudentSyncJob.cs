@@ -21,6 +21,7 @@ public sealed class StudentSyncJob
         {
             Console.Error.WriteLine(
                 $"Failed to sync students: {ex.Message}");
+            throw;
         }
     }
 }

@@ -11,7 +11,7 @@ public class CrmApiClient : ICrmApiClient
     {
         var response = await _httpClient.PostAsJsonAsync("api/studentcrm", student, cancellationToken);
         
-        //handle a validation error from the CRM API
+        //handle a validation error from the CRM API, this is an assumption that a 422 status code indicates a validation failure
         if (response.StatusCode == HttpStatusCode.UnprocessableEntity)
         {
             throw new StudentRejectedException(

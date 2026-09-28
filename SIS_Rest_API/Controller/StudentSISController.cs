@@ -1,5 +1,5 @@
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/students")]
 public class StudentSISController : ControllerBase
 {
     private readonly IStudentSISService _studentSISService;
@@ -11,7 +11,6 @@ public class StudentSISController : ControllerBase
 
     // GET api/students
     [HttpGet]
-    [Route("api/students")]
     public IActionResult GetStudents()
     {
         // 1. Fetch student records from data source
