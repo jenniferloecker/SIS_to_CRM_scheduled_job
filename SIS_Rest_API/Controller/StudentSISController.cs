@@ -14,7 +14,7 @@ public class StudentSISController : ControllerBase
     public IActionResult GetStudents()
     {
         // 1. Fetch student records from data source
-        List<Student> students = _studentSISService.GetAllStudents();
+        List<SisStudent> students = _studentSISService.GetAllStudents();
 
         // 2. Return 404 if none found, else 200 with list
         if (students == null || students.Count == 0)

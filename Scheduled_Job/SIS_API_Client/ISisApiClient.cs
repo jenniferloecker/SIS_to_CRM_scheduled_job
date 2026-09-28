@@ -1,4 +1,4 @@
 public interface ISisApiClient
 {
-    Task<List<Student>> GetStudentsAsync();
+    Task<List<SisStudent>> GetStudentsAsync(CancellationToken cancellationToken);
 }

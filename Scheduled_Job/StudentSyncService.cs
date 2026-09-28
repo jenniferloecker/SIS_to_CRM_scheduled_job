@@ -10,7 +10,7 @@ public class StudentSyncService
         _crmClient = crmClient;
     }
 
-    public async Task SyncStudentsAsync(CancellationToken cancellationToken)
+    public async Task<SyncResult> SyncStudentsAsync(CancellationToken cancellationToken)
     {
         // 1. Pull from SIS
         List<SisStudent> sisStudents = await _sisClient.GetStudentsAsync(cancellationToken);

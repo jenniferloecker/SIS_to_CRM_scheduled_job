@@ -7,12 +7,12 @@ public class SisApiClient : ISisApiClient
         _httpClient = httpClient;
     }
 
-    public async Task<List<Student>> GetStudentsAsync()
+    public async Task<List<SisStudent>> GetStudentsAsync(CancellationToken cancellationToken)
     {
         // GET api/students on SIS_Rest_API
-        var response = await _httpClient.GetAsync("api/students");
+        var response = await _httpClient.GetAsync("api/students", cancellationToken);
         response.EnsureSuccessStatusCode();
 
-        return await response.Content.ReadFromJsonAsync<List<Student>>();
+        return await response.Content.ReadFromJsonAsync<List<SisStudent>>(cancellationToken: cancellationToken);
     }
 }

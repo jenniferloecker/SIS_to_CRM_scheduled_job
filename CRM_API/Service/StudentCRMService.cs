@@ -11,8 +11,4 @@ public class StudentCRMService : IStudentCRMService
         //Add logic to upsert a single student into the CRM system
     }
 
-    public async Task UpsertStudentsAsync(List<CrmStudent> students)
-    {
-        //Add logic to upsert each student into the CRM system
-    }
 }

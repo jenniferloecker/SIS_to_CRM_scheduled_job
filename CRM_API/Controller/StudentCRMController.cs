@@ -20,14 +20,4 @@ public class StudentCRMController : ControllerBase
         return Ok();
     }
 
-    [HttpPost("batch")]
-    public async Task<IActionResult> UpsertStudents([FromBody] List<CrmStudent> students)
-    {
-        if (students == null || students.Count == 0)
-            return BadRequest("At least one student is required");
-
-        await _crmService.UpsertStudentsAsync(students);
-
-        return Ok();
-    }
 }

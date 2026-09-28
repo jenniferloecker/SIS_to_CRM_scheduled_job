@@ -1,4 +1,4 @@
 public interface ICrmApiClient
 {
-    Task PushStudentsAsync(List<Student> students);
+    Task UpsertStudentAsync(CrmStudent student, CancellationToken cancellationToken);
 }

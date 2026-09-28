@@ -7,16 +7,9 @@ public class CrmApiClient : ICrmApiClient
         _httpClient = httpClient;
     }
 
-    public async Task UpsertStudentAsync(Student student, CancellationToken cancellationToken)
+    public async Task UpsertStudentAsync(CrmStudent student, CancellationToken cancellationToken)
     {
-        var response = await _httpClient.PostAsJsonAsync("api/students", student, cancellationToken);
-        response.EnsureSuccessStatusCode();
-    }
-
-    public async Task PushStudentsAsync(List<Student> students, CancellationToken cancellationToken)
-    {
-        // POST api/students/batch on CRM_API
-        var response = await _httpClient.PostAsJsonAsync("api/students/batch", students, cancellationToken);
+        var response = await _httpClient.PostAsJsonAsync("api/studentcrm", student, cancellationToken);
         response.EnsureSuccessStatusCode();
     }
 }
