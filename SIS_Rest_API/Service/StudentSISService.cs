@@ -1,14 +1,12 @@
 public class StudentSISService : IStudentSISService
 {
-    private readonly IStudentSISRepository _repository;
-
-    public StudentSISService(IStudentSISRepository repository)
+    public StudentSISService()
     {
-        _repository = repository;
     }
 
-    public List<Student> GetAllStudents()
+    public List<SisStudent> GetAllStudents()
     {
-        return _repository.GetAll();
+        //Retrieve all students from the repository
+        return new List<SisStudent>();
     }
 }

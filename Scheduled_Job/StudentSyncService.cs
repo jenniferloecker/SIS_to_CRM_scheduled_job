@@ -1,7 +1,8 @@
-public class StudentSyncService : IStudentSyncService
+public class StudentSyncService
 {
     private readonly ISisApiClient _sisClient;
     private readonly ICrmApiClient _crmClient;
+    public sealed record SyncResult(int Succeeded, List<string> FailedIds);
 
     public StudentSyncService(ISisApiClient sisClient, ICrmApiClient crmClient)
     {
@@ -9,20 +10,36 @@ public class StudentSyncService : IStudentSyncService
         _crmClient = crmClient;
     }
 
-    public async Task SyncStudentsAsync()
+    public async Task SyncStudentsAsync(CancellationToken cancellationToken)
     {
         // 1. Pull from SIS
-        List<Student> sisStudents = await _sisClient.GetStudentsAsync();
+        List<SisStudent> sisStudents = await _sisClient.GetStudentsAsync(cancellationToken);
+        var successCount = 0;
+        var failedIds = new List<string>();
 
-        if (sisStudents == null || sisStudents.Count == 0)
-            return;
+        foreach (var sisStudent in sisStudents)
+        {
+            try
+            {
+                var crmStudent = StudentTransformer.ToStudent(sisStudent);
 
-        // 2. Transform to CRM shape
-        List<Student> crmStudents = sisStudents
-            .Select(StudentTransformer.ToStudent)
-            .ToList();
+                await _crmClient.UpsertStudentAsync(crmStudent, cancellationToken);
 
-        // 3. Push to CRM
-        await _crmClient.PushStudentsAsync(crmStudents);
+                successCount++;
+            }
+            catch (StudentRejectedException ex)
+            {
+                failedIds.Add(sisStudent.Id);
+                Console.Error.WriteLine($"Student {sisStudent.Id} rejected: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                failedIds.Add(sisStudent.Id);
+                Console.Error.WriteLine($"Student {sisStudent.Id} failed: {ex.Message}");
+            }
+        }
+
+        // TODO: Monitoring system email or notification system
+        return new SyncResult(successCount, failedIds);
     }
 }

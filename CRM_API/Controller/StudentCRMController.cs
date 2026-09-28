@@ -10,7 +10,7 @@ public class StudentCRMController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> UpsertStudent([FromBody] Student student)
+    public async Task<IActionResult> UpsertStudent([FromBody] CrmStudent student)
     {
         if (student == null)
             return BadRequest("Student payload is required");
@@ -21,7 +21,7 @@ public class StudentCRMController : ControllerBase
     }
 
     [HttpPost("batch")]
-    public async Task<IActionResult> UpsertStudents([FromBody] List<Student> students)
+    public async Task<IActionResult> UpsertStudents([FromBody] List<CrmStudent> students)
     {
         if (students == null || students.Count == 0)
             return BadRequest("At least one student is required");

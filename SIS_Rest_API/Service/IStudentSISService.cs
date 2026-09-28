@@ -1,4 +1,4 @@
 public interface IStudentSISService
 {
-    List<Student> GetAllStudents();
+    List<SisStudent> GetAllStudents();
 }

@@ -1,20 +1,21 @@
 public sealed class StudentSyncJob
 {
-    private readonly ISisApiClient _sisApiClient;
-    private readonly ICrmApiClient _crmApiClient;
+    private readonly StudentSyncService _syncService;
 
-    public StudentSyncJob(ISisApiClient sisApiClient, ICrmApiClient crmApiClient)
+    public StudentSyncJob(StudentSyncService syncService)
     {
-        _sisApiClient = sisApiClient;
-        _crmApiClient = crmApiClient;
+        _syncService = syncService;
     }
 
     public async Task RunAsync(CancellationToken cancellationToken)
     {
         try
         {
-            StudentSyncService syncService = new StudentSyncService(_sisApiClient, _crmApiClient);
-            await syncService.SyncStudentsAsync(cancellationToken);
+            var result = await _syncService.SyncStudentsAsync(cancellationToken);
+        
+            Console.WriteLine(
+                $"Sync finished: {result.Succeeded} succeeded; " +
+                $"{result.FailedIds.Count} failed.");
         }
         catch (Exception ex)
         {

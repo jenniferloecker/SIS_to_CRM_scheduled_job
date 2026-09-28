@@ -1,5 +1,5 @@
 public interface IStudentCRMService
 {
-    Task UpsertStudentAsync(Student student);
-    Task UpsertStudentsAsync(List<Student> students);
+    Task UpsertStudentAsync(CrmStudent student);
+    Task UpsertStudentsAsync(List<CrmStudent> students);
 }

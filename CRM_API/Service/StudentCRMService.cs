@@ -1,22 +1,18 @@
 public class StudentCRMService : IStudentCRMService
 {
-    private readonly IStudentCRMRepository _repository;
 
-    public StudentCRMService(IStudentCRMRepository repository)
+    public StudentCRMService()
     {
-        _repository = repository;
+        
     }
 
-    public async Task UpsertStudentAsync(Student student)
+    public async Task UpsertStudentAsync(CrmStudent student)
     {
-        await _repository.UpsertAsync(student);
+        //Add logic to upsert a single student into the CRM system
     }
 
-    public async Task UpsertStudentsAsync(List<Student> students)
+    public async Task UpsertStudentsAsync(List<CrmStudent> students)
     {
-        foreach (var student in students)
-        {
-            await _repository.UpsertAsync(student);
-        }
+        //Add logic to upsert each student into the CRM system
     }
 }

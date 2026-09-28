@@ -1,4 +1,4 @@
-public class Student
+public class CrmStudent
 {
     public int Id { get; set; }
     public string Name { get; set; }

@@ -1,7 +1,14 @@
 public static class StudentTransformer
 {
-    public static Student ToStudent(Student sisStudent)
+    public static CrmStudent ToStudent(SisStudent sisStudent)
     {
-        // Map properties from Student to Student
+        // Map properties from SisStudent to CrmStudent
+        return new CrmStudent
+        {
+            Id = sisStudent.Id,
+            FirstName = sisStudent.FirstName,
+            LastName = sisStudent.LastName,
+            Email = sisStudent.Email
+        };
     }
 }
