@@ -2,7 +2,7 @@ public class StudentSyncService
 {
     private readonly ISisApiClient _sisClient;
     private readonly ICrmApiClient _crmClient;
-    public sealed record SyncResult(int Succeeded, List<string> FailedIds);
+    public sealed record SyncResult(int Succeeded, List<int> FailedIds);
 
     public StudentSyncService(ISisApiClient sisClient, ICrmApiClient crmClient)
     {
@@ -15,7 +15,7 @@ public class StudentSyncService
         // 1. Pull from SIS
         List<SisStudent> sisStudents = await _sisClient.GetStudentsAsync(cancellationToken);
         var successCount = 0;
-        var failedIds = new List<string>();
+        var failedIds = new List<int>();
 
         foreach (var sisStudent in sisStudents)
         {
@@ -31,11 +31,6 @@ public class StudentSyncService
             {
                 failedIds.Add(sisStudent.Id);
                 Console.Error.WriteLine($"Student {sisStudent.Id} rejected: {ex.Message}");
-            }
-            catch (Exception ex)
-            {
-                failedIds.Add(sisStudent.Id);
-                Console.Error.WriteLine($"Student {sisStudent.Id} failed: {ex.Message}");
             }
         }
 
